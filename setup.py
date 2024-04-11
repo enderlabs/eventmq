@@ -18,9 +18,9 @@ setup(
         'pyzmq==18.1.0',
         'six>=1.14,<2',
         'monotonic==0.4',
-        'croniter==0.3.10',
-        'future==0.15.2',
-        'psutil==5.6.6',
+        'croniter==1.0.5',
+        'future==0.18.3',
+        'psutil==5.6.7',
     ],
     extras_require={
           'docs': ['Sphinx==1.5.2', ],
