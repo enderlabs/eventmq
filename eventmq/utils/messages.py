@@ -18,7 +18,6 @@
 """
 import logging
 
-import six
 
 from . import random_characters
 from .. import conf, constants, exceptions

@@ -17,7 +17,7 @@ import logging
 import sys
 import time
 
-import mock
+from unittest import mock
 
 from .. import worker
 

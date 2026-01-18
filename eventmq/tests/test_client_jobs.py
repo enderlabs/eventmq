@@ -14,7 +14,7 @@
 # along with eventmq.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-import mock
+from unittest import mock
 from testfixtures import LogCapture
 
 from ..client import jobs
