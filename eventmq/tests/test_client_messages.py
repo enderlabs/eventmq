@@ -12,10 +12,9 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with eventmq.  If not, see <http://www.gnu.org/licenses/>.
-import sys
 import unittest
 
-import mock
+from unittest import mock
 from testfixtures import LogCapture
 
 from .. import conf
@@ -42,7 +41,7 @@ class CallableTestClass(object):
 class TestCase(unittest.TestCase):
     @mock.patch('eventmq.client.messages.send_request')
     def test_defer_job(self, sndreq_mock):
-        from future.moves.urllib.parse import urlsplit
+        from urllib.parse import urlsplit
 
         _msgid = 'mv029aisjf-09asdfualksd-aklds290fjoiw'
 
@@ -62,24 +61,14 @@ class TestCase(unittest.TestCase):
         # defer_job should return _msgid untouched
         self.assertEqual(msgid, _msgid)
 
-        if sys.version_info[0] == 3:
-            msg = ['run', {
-                'callable': 'urlsplit',
-                'path': 'urllib.parse',
-                'args': [1, 2],
-                'kwargs': {'a': 1, 'b': 2},
-                'class_args': [9, 8],
-                'class_kwargs': {'z': 9, 'y': 8},
-            }]
-        else:
-            msg = ['run', {
-                'callable': 'urlsplit',
-                'path': 'urlparse',
-                'args': [1, 2],
-                'kwargs': {'a': 1, 'b': 2},
-                'class_args': [9, 8],
-                'class_kwargs': {'z': 9, 'y': 8},
-            }]
+        msg = ['run', {
+            'callable': 'urlsplit',
+            'path': 'urllib.parse',
+            'args': [1, 2],
+            'kwargs': {'a': 1, 'b': 2},
+            'class_args': [9, 8],
+            'class_kwargs': {'z': 9, 'y': 8},
+        }]
 
         sndreq_mock.assert_called_with(socket, msg,
                                        reply_requested=True,

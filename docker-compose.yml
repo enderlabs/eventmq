@@ -1,23 +1,27 @@
-eventmq:
-  build: .
-  volumes:
-    - ./:/eventmq
+version: '3.8'
 
-worker:
-  image: eventmq_eventmq
-  command: emq-jobmanager
-  links:
-    - broker:eventmq-broker
+services:
+  eventmq:
+    build: .
+    volumes:
+      - ./:/eventmq
 
-scheduler:
-  image: eventmq_eventmq
-  command: emq-scheduler
-  links:
-    - broker:eventmq-broker
+  worker:
+    image: eventmq_eventmq
+    command: emq-jobmanager
+    depends_on:
+      - broker
 
-broker:
-  image: eventmq_eventmq
-  command: emq-router
-  ports:
-    - "47290:47290"
-    - "47291:47291"
+  scheduler:
+    image: eventmq_eventmq
+    command: emq-scheduler
+    depends_on:
+      - broker
+
+  broker:
+    image: eventmq_eventmq
+    command: emq-router
+    ports:
+      - "47290:47290"
+      - "47291:47291"
+

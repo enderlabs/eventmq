@@ -20,13 +20,13 @@ RUN apt-get update && apt-get -y dist-upgrade \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
-# install python 3.9.5
-RUN wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz
-RUN tar -xvf Python-3.9.5.tgz
-RUN cd Python-3.9.5/ && ./configure --enable-optimizations && make && make altinstall
+# install python 3.10
+RUN wget https://www.python.org/ftp/python/3.10.16/Python-3.10.16.tgz
+RUN tar -xvf Python-3.10.16.tgz
+RUN cd Python-3.10.16/ && ./configure --enable-optimizations && make && make altinstall
 
-# Make Symbolic link of Python 3.9
-RUN ln -sf /usr/local/bin/python3.9 /usr/bin/python
+# Make Symbolic link of Python 3.10
+RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python
 
 # Use a virtualenv to isolate dependencies.
 RUN python -m venv /venv
@@ -36,7 +36,7 @@ RUN python -m venv /venv
 
 # Wheel is needed to build wheel packages. You'll get ignorable errors
 # without this.
-RUN /venv/bin/python3.9 -m pip install --upgrade wheel
+RUN /venv/bin/python3.10 -m pip install --upgrade wheel
 
 RUN mkdir -p /eventmq
 
@@ -44,7 +44,7 @@ ADD . /eventmq
 
 WORKDIR /eventmq
 
-RUN /venv/bin/python3.9 -m pip install -e .
+RUN /venv/bin/python3.10 -m pip install -e .
 
 ADD etc/eventmq.conf-dist /etc/eventmq.conf
 

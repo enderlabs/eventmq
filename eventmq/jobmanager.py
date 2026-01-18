@@ -25,7 +25,6 @@ import signal
 import sys
 import time
 
-from six.moves import range
 import zmq
 
 from eventmq.log import setup_logger

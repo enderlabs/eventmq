@@ -12,8 +12,6 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with eventmq.  If not, see <http://www.gnu.org/licenses/>.
-from past.builtins import basestring
-from six.moves import range
 
 from .. import conf
 
@@ -42,7 +40,7 @@ def encodify(message):
     elif isinstance(message, dict):
         for k in message:
             message[k] = encodify(message[k])
-    elif isinstance(message, basestring):
+    elif isinstance(message, str):
         return message.encode(conf.DEFAULT_ENCODING)
     else:
         return message

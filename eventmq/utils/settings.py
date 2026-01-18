@@ -16,19 +16,11 @@
 :mod:`settings` -- Settings Utilities
 =====================================
 """
-
-# ConfigParser was renamed to configparser in python 3. Do this try...except
-# to maintain python 2/3 compatability
-try:
-    from configparser import ConfigParser, NoOptionError
-except ImportError:
-    from ConfigParser import ConfigParser, NoOptionError
-
+from configparser import ConfigParser, NoOptionError
 import json
 import logging
 import os
 
-from six.moves import map
 
 from . import tuplify
 from .. import conf

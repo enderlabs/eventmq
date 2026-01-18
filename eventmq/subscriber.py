@@ -1,20 +1,16 @@
 """
 derp subscriber
 """
-from __future__ import print_function
-
-from past.builtins import xrange
-import six
 import zmq
 
 
 if __name__ == "__main__":
     sockets = []
-    for i in xrange(100):
+    for i in range(100):
         ctx = zmq.Context()
         s = ctx.socket(zmq.SUB)
         s.linger = 0
-        s.setsockopt(zmq.SUBSCRIBE, six.ensure_binary(str(i)))
+        s.setsockopt(zmq.SUBSCRIBE, str(i).encode('utf-8'))
         s.connect('tcp://127.0.0.1:47299')
         sockets.append(s)
 

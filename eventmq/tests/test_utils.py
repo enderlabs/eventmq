@@ -13,24 +13,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with eventmq.  If not, see <http://www.gnu.org/licenses/>.
 
-#
-
-# ConfigParser was renamed to configparser in python 3. Do this try...except
-# to maintain python 2/3 compatability
-try:
-    from configparser import ConfigParser
-except ImportError:
-    import ConfigParser
-
-from imp import reload
-import io
+from configparser import ConfigParser
+from importlib import reload
 import os
 import random
-import sys
 import unittest
 
-import mock
-from six.moves import range
+from unittest import mock
 
 from .. import conf
 from .. import constants
@@ -61,11 +50,7 @@ class SettingsTestCase(unittest.TestCase):
 
     def setUp(self):
         self._config = ConfigParser()
-
-        if sys.version_info[0] == 3:
-            self._config.read_string(self.settings_ini)
-        else:
-            self._config.readfp(io.BytesIO(self.settings_ini))
+        self._config.read_string(self.settings_ini)
 
         # sometimes the tests step on each other with this module. reloading
         # ensures fresh test data

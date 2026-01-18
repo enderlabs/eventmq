@@ -16,10 +16,7 @@
 :mod:`timeutils` -- Time Utilites
 =================================
 """
-try:
-    from time import monotonic as _monotonic  # Python3
-except ImportError:
-    from monotonic import monotonic as _monotonic
+from time import monotonic as _monotonic
 from time import time as _time
 
 

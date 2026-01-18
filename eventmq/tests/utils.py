@@ -14,7 +14,6 @@
 # along with eventmq.  If not, see <http://www.gnu.org/licenses/>.
 import uuid
 
-import six
 import zmq
 
 from .. import conf, constants

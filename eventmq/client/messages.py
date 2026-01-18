@@ -19,7 +19,6 @@
 from json import dumps as serialize
 import logging
 
-from past.builtins import basestring
 
 from .. import conf
 from ..utils.functions import name_from_callable, split_callable_name
@@ -71,7 +70,7 @@ def schedule(socket, func, interval_secs=None, args=(), kwargs=None,
                      'but not both (or neither)')
         return
 
-    if func and isinstance(func, basestring):
+    if func and isinstance(func, str):
         if '.' not in func:
             logger.error('Invalid callable string passed, '
                          'absolute path required: "{}"'.format(func))
@@ -162,7 +161,7 @@ def defer_job(
     if not kwargs:
         kwargs = {}
 
-    if func and isinstance(func, basestring):
+    if func and isinstance(func, str):
         if '.' not in func:
             logger.error('Invalid callable string passed, '
                          'absolute path required: "{}"'.format(func))

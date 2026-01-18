@@ -17,8 +17,7 @@
 =============================
 Handles cron and other scheduled tasks
 """
-from __future__ import print_function
-
+from hashlib import sha1 as emq_hash
 from hashlib import sha1 as emq_hash
 import importlib
 import json
@@ -28,7 +27,6 @@ import logging
 import sys
 
 from croniter import croniter
-from six import iteritems, next
 
 from eventmq.log import setup_logger
 from . import __version__
@@ -143,7 +141,7 @@ class Scheduler(HeartbeatMixin, EMQPService):
                                  seconds_until(cron[0]))
 
             cancel_jobs = []
-            for k, v in iteritems(self.interval_jobs):
+            for k, v in self.interval_jobs.items():
                 if v[0] <= m_now:
                     # The schedule time has elapsed
                     msg = v[1]

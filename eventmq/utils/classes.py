@@ -22,7 +22,6 @@ import json
 import logging
 import sys
 
-import six
 import zmq.error
 
 from .. import conf, constants, exceptions, poller, utils
