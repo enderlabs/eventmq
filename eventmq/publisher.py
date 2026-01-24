@@ -19,7 +19,6 @@ Publishes messages to subscribers
 """
 import logging
 
-import six
 import zmq
 
 from . import constants

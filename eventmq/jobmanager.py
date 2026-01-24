@@ -40,12 +40,7 @@ from .utils.messages import send_emqp_message as sendmsg
 from .utils.settings import import_settings
 from .utils.timeutils import monotonic
 from .worker import MultiprocessWorker as Worker
-
-
-if sys.version[0] == '2':
-    import Queue
-else:
-    import queue as Queue
+import queue as Queue
 
 
 logger = logging.getLogger(__name__)
