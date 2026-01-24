@@ -6,7 +6,7 @@ version = 'unknown'
 with open('eventmq/__init__.py') as f:
     for line in f:
         if line.startswith('__version__'):
-            version = ast.parse(line).body[0].value.s
+            version = ast.parse(line).body[0].value.value
             break
 
 setup(
@@ -14,6 +14,7 @@ setup(
     version=version,
     description='EventMQ job execution and messaging system based on ZeroMQ',
     packages=find_packages(),
+    python_requires='>=3.10',
     install_requires=[
         'pyzmq==25.1.2',
         'croniter==2.0.5',

@@ -19,6 +19,7 @@ import zmq
 from .. import conf, constants
 from ..utils.classes import ZMQReceiveMixin, ZMQSendMixin
 from ..utils.devices import generate_device_name
+from ..utils.encoding import ensure_binary
 
 
 class FakeDevice(ZMQReceiveMixin, ZMQSendMixin):
@@ -49,11 +50,11 @@ def send_raw_INFORM(sock, type_, queues=(conf.DEFAULT_QUEUE_NAME,)):
     msgid = str(uuid.uuid4())
     tracker = sock.zsocket.send_multipart((
         b'',
-        six.ensure_binary(constants.PROTOCOL_VERSION),
+        ensure_binary(constants.PROTOCOL_VERSION),
         b'INFORM',
-        six.ensure_binary(msgid),
-        six.ensure_binary(','.join(queues)),
-        six.ensure_binary(type_)
+        ensure_binary(msgid),
+        ensure_binary(','.join(queues)),
+        ensure_binary(type_)
     ), copy=False, track=True)
     tracker.wait(1)
 
@@ -73,9 +74,9 @@ def send_raw_READY(sock):
     msgid = str(uuid.uuid4())
     tracker = sock.zsocket.send_multipart((
         b'',
-        six.ensure_binary(constants.PROTOCOL_VERSION),
+        ensure_binary(constants.PROTOCOL_VERSION),
         b'READY',
-        six.ensure_binary(msgid)
+        ensure_binary(msgid)
     ), copy=False, track=True)
     tracker.wait(1)
 

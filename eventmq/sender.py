@@ -145,10 +145,7 @@ class Sender(ZMQSendMixin, ZMQReceiveMixin):
 
         self.name = kwargs.pop('name', str(uuid.uuid4()))
 
-        if sys.version[0] == '2':
-            self.zsocket.setsockopt(zmq.IDENTITY, self.name)
-        else:
-            self.zsocket.setsockopt_string(zmq.IDENTITY, str(self.name))
+        self.zsocket.setsockopt_string(zmq.IDENTITY, str(self.name))
 
         self.status = constants.STATUS.ready
 

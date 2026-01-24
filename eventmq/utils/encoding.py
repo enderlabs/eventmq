@@ -16,6 +16,24 @@
 from .. import conf
 
 
+def ensure_binary(s, encoding='utf-8'):
+    """
+    Ensure that a string is converted to bytes.
+
+    Args:
+        s: string or bytes to convert
+        encoding (str): encoding to use for conversion
+
+    Returns:
+        bytes: the input converted to bytes
+    """
+    if isinstance(s, bytes):
+        return s
+    if isinstance(s, str):
+        return s.encode(encoding)
+    return s
+
+
 def encodify(message):
     """
     Recursivly ensure all strings have been encoded to

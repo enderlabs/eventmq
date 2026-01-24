@@ -190,10 +190,7 @@ def callable_from_name(callable_name, *args, **kwargs):
 
     try:
         package = importlib.import_module(s_package)
-        if sys.version[0] == '2':
-            reload(package)  # noqa - flake8 fails here on py3
-        else:
-            importlib.reload(package)
+        importlib.reload(package)
     except Exception as e:
         raise CallableFromPathError(str(e))
 

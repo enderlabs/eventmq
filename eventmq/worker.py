@@ -26,11 +26,7 @@ from threading import Thread
 
 from . import conf
 from .utils.functions import callable_from_name
-
-if sys.version[0] == '2':
-    import Queue
-else:
-    import queue as Queue
+import queue as Queue
 
 
 class MultiprocessWorker(Process):
