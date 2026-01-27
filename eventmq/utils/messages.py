@@ -20,6 +20,7 @@ import logging
 
 
 from . import random_characters
+from .encoding import ensure_binary
 from .. import conf, constants, exceptions
 
 logger = logging.getLogger(__name__)
