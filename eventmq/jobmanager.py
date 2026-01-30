@@ -170,6 +170,17 @@ class JobManager(HeartbeatMixin, EMQPService):
                             resp = self.finished_queue.get_nowait()
                         except Queue.Empty:
                             break
+                        except (BrokenPipeError, EOFError, OSError) as e:
+                            logger.error(
+                                "Worker communication error (%s): %s. "
+                                "Worker process may have died.",
+                                type(e).__name__, e
+                            )
+                            self.check_worker_health()
+                            break
+                        except Exception as e:
+                            logger.exception(f"Unexpected error in jobmanager loop: {e}")
+                            break
                         else:
                             self.handle_response(resp)
 
