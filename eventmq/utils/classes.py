@@ -22,11 +22,10 @@ import json
 import logging
 import sys
 
-import six
 import zmq.error
 
 from .. import conf, constants, exceptions, poller, utils
-from ..utils.encoding import encodify
+from ..utils.encoding import encodify, ensure_binary
 from ..utils.messages import send_emqp_message as sendmsg
 from ..utils.timeutils import monotonic, timestamp
 
@@ -363,7 +362,7 @@ class ZMQReceiveMixin(object):
         msg = self.zsocket.recv_multipart()
 
         # Decode bytes to strings in python3
-        if sys.version[0] == '3' and type(msg[0] in (bytes,)):
+        if type(msg[0]) in (bytes,):
             msg = [m.decode() for m in msg]
 
         # If it's not at least 4 frames long then most likely it isn't an
@@ -412,7 +411,7 @@ class ZMQSendMixin(object):
         msg = encodify(headers + message)
 
         # Decode bytes to strings in python3
-        if sys.version[0] == '3' and type(msg[0] in (bytes,)):
+        if type(msg[0]) in (bytes,):
             msg = [m.decode() for m in msg]
 
         # If it's not at least 4 frames long then most likely it isn't an
@@ -423,7 +422,7 @@ class ZMQSendMixin(object):
             logger.debug('Sending message: %s' % str(msg))
 
         try:
-            self.zsocket.send_multipart([six.ensure_binary(m) for m in msg],
+            self.zsocket.send_multipart([ensure_binary(m) for m in msg],
                                         flags=zmq.NOBLOCK)
         except zmq.error.ZMQError as e:
             if 'No route' in str(e):
@@ -473,7 +472,7 @@ class EMQdeque(object):
         return "{}".format(str(self._queue))
 
     def __unicode__(self):
-        return "{}".format(six.text_type(self._queue))
+        return "{}".format(str(self._queue))
 
     def __repr__(self):
         return "{}".format(repr(self._queue))

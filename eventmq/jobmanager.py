@@ -25,7 +25,6 @@ import signal
 import sys
 import time
 
-from six.moves import range
 import zmq
 
 from eventmq.log import setup_logger
@@ -41,12 +40,7 @@ from .utils.messages import send_emqp_message as sendmsg
 from .utils.settings import import_settings
 from .utils.timeutils import monotonic
 from .worker import MultiprocessWorker as Worker
-
-
-if sys.version[0] == '2':
-    import Queue
-else:
-    import queue as Queue
+import queue as Queue
 
 
 logger = logging.getLogger(__name__)
@@ -175,6 +169,17 @@ class JobManager(HeartbeatMixin, EMQPService):
                         try:
                             resp = self.finished_queue.get_nowait()
                         except Queue.Empty:
+                            break
+                        except (BrokenPipeError, EOFError, OSError) as e:
+                            logger.error(
+                                "Worker communication error (%s): %s. "
+                                "Worker process may have died.",
+                                type(e).__name__, e
+                            )
+                            self.check_worker_health()
+                            break
+                        except Exception as e:
+                            logger.exception(f"Unexpected error in jobmanager loop: {e}")
                             break
                         else:
                             self.handle_response(resp)

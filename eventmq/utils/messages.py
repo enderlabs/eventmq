@@ -18,9 +18,9 @@
 """
 import logging
 
-import six
 
 from . import random_characters
+from .encoding import ensure_binary
 from .. import conf, constants, exceptions
 
 logger = logging.getLogger(__name__)
@@ -168,7 +168,7 @@ def fwd_emqp_router_message(socket, recipient_id, payload):
     if conf.SUPER_DEBUG:
         logger.debug('Forwarding message: {}'.format(str(payload)))
     try:
-        socket.zsocket.send_multipart([six.ensure_binary(x) for x in payload],
+        socket.zsocket.send_multipart([ensure_binary(x) for x in payload],
                                       flags=zmq.NOBLOCK)
     except zmq.error.ZMQError as e:
         if e.errno in errnos:

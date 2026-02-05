@@ -6,7 +6,7 @@ version = 'unknown'
 with open('eventmq/__init__.py') as f:
     for line in f:
         if line.startswith('__version__'):
-            version = ast.parse(line).body[0].value.s
+            version = ast.parse(line).body[0].value.value
             break
 
 setup(
@@ -14,26 +14,23 @@ setup(
     version=version,
     description='EventMQ job execution and messaging system based on ZeroMQ',
     packages=find_packages(),
+    python_requires='>=3.10',
     install_requires=[
-        'pyzmq==18.1.0',
-        'six>=1.14,<2',
-        'monotonic==0.4',
-        'croniter==1.0.5',
-        'future==0.18.3',
-        'psutil==5.6.7',
+        'pyzmq==25.1.2',
+        'croniter==2.0.5',
+        'psutil==5.9.8',
     ],
     extras_require={
-          'docs': ['Sphinx==1.5.2', ],
+          'docs': ['Sphinx>=7.0.0,<8', ],
           'testing': [
-              'flake8==3.7.8',
-              'flake8-import-order==0.18.1',
-              'flake8-print==3.1.0',
-              'coverage==4.0.3',
-              'testfixtures==4.7.0',
-              'freezegun==0.3.7',
-              'tl.testing==0.5',
-              'mock==1.3.0'],
-          },
+              'flake8>=7.0.0,<8',
+              'flake8-import-order>=0.18.2,<1',
+              'flake8-print>=5.0.0,<6',
+              'coverage>=7.0.0,<8',
+              'testfixtures>=8.0.0,<9',
+              'freezegun>=1.4.0,<2',
+          ],
+      },
     author='EventMQ Contributors',
     url='https://github.com/eventmq/eventmq/',
 
@@ -52,11 +49,10 @@ setup(
         'License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)',  # noqa
         'Operating System :: OS Independent',
 
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ],
     scripts=[
         'bin/emq-cli',

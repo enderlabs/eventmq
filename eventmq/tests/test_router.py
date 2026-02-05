@@ -17,8 +17,7 @@ import json
 import unittest
 
 from freezegun import freeze_time
-import mock
-from six.moves import range
+from unittest import mock
 from testfixtures import LogCapture
 import zmq
 

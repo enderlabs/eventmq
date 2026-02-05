@@ -22,7 +22,6 @@ import json  # deserialize queues in on_inform. should be refactored
 import logging
 import signal
 
-from six.moves import map
 
 from eventmq.log import setup_logger, setup_wal_logger
 from . import __version__

@@ -17,14 +17,10 @@ import logging
 import sys
 import time
 
-import mock
+from unittest import mock
 
 from .. import worker
-
-if sys.version[0] == '2':
-    import Queue
-else:
-    import queue as Queue
+import queue as Queue
 
 
 ADDR = 'inproc://pour_the_rice_in_the_thing'
